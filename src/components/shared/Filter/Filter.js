@@ -1,26 +1,33 @@
-import React, {Component} from 'react'
-import './style.css'
+import React, { Component } from 'react';
+import './style.css';
 
 const INITIAL_STATE = {
-    filter: ''
-}
+  filter: '',
+};
 
 class Filter extends Component {
+  state = { ...INITIAL_STATE };
 
-    state = {...INITIAL_STATE}
+  handleChange = e => {
+    const { onFilterChange } = this.props;
 
-    handleChange = e => {
-        this.props.onFilterChange(e.target.value)
-    }
+    onFilterChange(e.target.value);
+  };
 
-    render() {
-        const {placeholder, filter,} = this.props
+  render() {
+    const { placeholder, filter } = this.props;
 
-        return (
-            <input className="filterInput" placeholder={placeholder} type="text" name="filter" value={filter}
-                   onChange={this.handleChange}/>
-        )
-    }
+    return (
+      <input
+        className="filterInput"
+        placeholder={placeholder}
+        type="text"
+        name="filter"
+        value={filter}
+        onChange={this.handleChange}
+      />
+    );
+  }
 }
 
-export default Filter
+export default Filter;
