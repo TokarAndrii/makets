@@ -20,6 +20,7 @@ const Menu = ({ menuList = [], className, filter, onFilterChange }) => (
           itemName={menuListItem.name}
           itemPrice={menuListItem.price}
           itemIngredients={menuListItem.ingredients}
+          rate={menuListItem.rate}
         />
       ))}
     </div>

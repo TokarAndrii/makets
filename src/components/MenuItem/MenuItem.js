@@ -1,6 +1,10 @@
 import React from 'react';
-import MaterialIcon, { colorPalette } from 'material-icons-react';
+import uuidv4 from 'uuid/v4';
+import { colorPalette } from 'material-icons-react';
+import StarRateItem from '../shared/StarRateItem';
 import './style.css';
+
+const rateHoldersLength = 10;
 
 const MenuItem = ({
   imageUrl,
@@ -8,6 +12,7 @@ const MenuItem = ({
   itemDescription,
   itemPrice,
   itemIngredients,
+  rate,
 }) => (
   <div className="menuItem">
     <div>
@@ -20,48 +25,15 @@ const MenuItem = ({
         </em>
       </p>
       <p className="rateHolders">
-        <span className="rateItem">
-          <MaterialIcon
-            icon="star_rate"
-            size={20}
-            color={colorPalette.amber._200}
-          />
-        </span>
-        <span className="rateItem">
-          <MaterialIcon
-            icon="star_rate"
-            size={20}
-            color={colorPalette.amber._200}
-          />
-        </span>
-        <span className="rateItem">
-          <MaterialIcon
-            icon="star_rate"
-            size={20}
-            color={colorPalette.amber._200}
-          />
-        </span>
-        <span className="rateItem">
-          <MaterialIcon icon="star_rate" size={20} />
-        </span>
-        <span className="rateItem">
-          <MaterialIcon icon="star_rate" size={20} />
-        </span>
-        <span className="rateItem">
-          <MaterialIcon icon="star_rate" size={20} />
-        </span>
-        <span className="rateItem">
-          <MaterialIcon icon="star_rate" size={20} />
-        </span>
-        <span className="rateItem">
-          <MaterialIcon icon="star_rate" size={20} />
-        </span>
-        <span className="rateItem">
-          <MaterialIcon icon="star_rate" size={20} />
-        </span>
-        <span className="rateItem">
-          <MaterialIcon icon="star_rate" size={20} />
-        </span>
+        {Array.from({ length: rateHoldersLength })
+          .map(() => uuidv4())
+          .map((curr, index) => (
+            <StarRateItem
+              key={curr}
+              className="rateItem"
+              color={index < rate ? colorPalette.amber._200 : null}
+            />
+          ))}
       </p>
     </div>
     <div>{itemDescription}</div>

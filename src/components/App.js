@@ -16,11 +16,9 @@ import commentsHistory from '../assets/comments.json';
 import './App.css';
 
 const INITIAL_STATE = {
-  navigationMenuList: navList,
   menuList: userCabinetMenu,
   userName: '',
   filter: '',
-  orderHistory: orderHistoryList,
   comments: commentsHistory,
 };
 
@@ -39,13 +37,7 @@ class App extends Component {
     );
 
   render() {
-    const {
-      navigationMenuList,
-      menuList,
-      filter,
-      orderHistory,
-      comments,
-    } = this.state;
+    const { menuList, filter, comments } = this.state;
     const menuFiltered = this.getFilteredMenu(filter, menuList);
 
     return (
@@ -56,10 +48,7 @@ class App extends Component {
             logoSrc="https://placeimg.com/100/100/tech"
             logoAlt="placeimg tech logo"
           />
-          <Navigation
-            className="navigatoinList"
-            navigationMenuList={navigationMenuList}
-          />
+          <Navigation className="navigatoinList" navigationMenuList={navList} />
           <UserMenu
             handleOpenDropDownMenu={this.handleOpenDropDownMenu}
             userName="Some Name"
@@ -73,7 +62,7 @@ class App extends Component {
           filter={filter}
           onFilterChange={this.handleFilterChange}
         />
-        <OrderHistory orderList={orderHistory} className="orderTable" />
+        <OrderHistory orderList={orderHistoryList} className="orderTable" />
         <AuthPage className="authPage">
           <LoginForm
             title="Sign In Form"
