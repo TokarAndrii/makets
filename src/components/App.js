@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GridLoader from 'react-spinners/GridLoader';
 import Header from './shared/Header/Header';
+import Tabs from './Tabs/Tabs';
 import Logo from './shared/Logo/Logo';
 import Navigation from './shared/navigation/Navigation';
 import Modal from './shared/Modal/Modal';
@@ -28,6 +29,29 @@ const INITIAL_STATE = {
   detailsOrder: [],
   isLoading: false,
 };
+
+const tabsList = [
+  {
+    title: 'Sign In',
+    content: (
+      <RegisterForm
+        title="Sign Up Form"
+        buttontext="Sign Up"
+        className={styles.loginForm}
+      />
+    ),
+  },
+  {
+    title: 'Sign Up',
+    content: (
+      <LoginForm
+        title="Sign In Form"
+        buttontext="Sign In"
+        className={styles.loginForm}
+      />
+    ),
+  },
+];
 
 class App extends Component {
   state = { ...INITIAL_STATE };
@@ -151,6 +175,7 @@ class App extends Component {
             </Modal>
           )
         )}
+        <Tabs tabs={tabsList} />
         <Header className={styles.header}>
           <Logo
             className={styles.logo}
