@@ -1,7 +1,7 @@
 import React from 'react';
 import uuidv4 from 'uuid/v4';
 import { colorPalette } from 'material-icons-react';
-import StarRateItem from '../shared/StarRateItem';
+import StarRateItem from '../shared/StarRateItem/StarRateItem';
 import './style.css';
 
 const rateHoldersLength = 10;

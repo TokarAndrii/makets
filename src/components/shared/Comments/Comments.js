@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Button from '../Button';
+import React, {Component} from 'react';
+import Button from '../Button/Button';
 import './style.css';
 
 const INITIAL_STATE = {
@@ -8,33 +8,33 @@ const INITIAL_STATE = {
 };
 
 class Comments extends Component {
-  state = { ...INITIAL_STATE };
+  state = {...INITIAL_STATE};
 
   static defaultProps = {
     comments: [],
   };
 
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState({ [name]: value });
+  handleChange = ({target}) => {
+    const {name, value} = target;
+    this.setState({[name]: value});
   };
 
   handleSubmit = e => {
     e.preventDefault();
 
-    const { commentsText, rate } = this.state;
+    const {commentsText, rate} = this.state;
 
     console.log(`
             commentsText: ${commentsText}
             rate: ${rate}
         `);
 
-    this.setState({ ...INITIAL_STATE });
+    this.setState({...INITIAL_STATE});
   };
 
   render() {
-    const { comments } = this.props;
-    const { commentsText } = this.state;
+    const {comments} = this.props;
+    const {commentsText} = this.state;
 
     return (
       <div className="commensBlock">

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Button from '../shared/Button';
+import Button from '../shared/Button/Button';
 import Input from '../shared/Input/Input';
+import styles from './LoginForm.module.css';
 import './style.css';
 
 const INITIAL_STATE = {
@@ -33,7 +34,7 @@ class Login extends Component {
     const { title, buttontext } = this.props;
     const { email, password } = this.state;
     return (
-      <form className="loginForm" onSubmit={this.handleSubmit}>
+      <form className={styles.loginForm} onSubmit={this.handleSubmit}>
         <h2 className="loginFormTitle">{title}</h2>
         <div className="row">
           <label className="label" htmlFor="email">

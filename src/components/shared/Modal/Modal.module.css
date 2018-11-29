@@ -1,0 +1,35 @@
+.backDrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalWindow {
+  width: 1800px;
+  min-height: 300px;
+  background-color: #fff;
+  padding: 16px;
+}
+
+.closeUserModalBtn {
+  top: 50px;
+  right: 50%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  background-color: #fff;
+  padding: 8px;
+}
+
+.closeUserModalBtn:hover {
+  background-color: lightcyan;
+}

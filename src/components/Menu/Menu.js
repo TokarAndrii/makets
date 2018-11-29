@@ -1,6 +1,6 @@
 import React from 'react';
-import MenuItem from './MenuItem/MenuItem';
-import Filter from './shared/Filter/Filter';
+import MenuItem from '../MenuItem/MenuItem';
+import Filter from '../shared/Filter/Filter';
 
 const Menu = ({ menuList = [], className, filter, onFilterChange }) => (
   <div>

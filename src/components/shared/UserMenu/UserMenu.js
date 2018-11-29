@@ -1,7 +1,8 @@
 import React, { Component, createRef } from 'react';
 import MaterialIcon from 'material-icons-react';
-import UserDropDown from '../UserDropDown';
-import Button from './Button';
+import UserDropDown from '../../UserDropDown/UserDropDown';
+import Button from '../Button/Button';
+import styles from './UserMenu.module.css';
 
 const INITIAL_STATE = {
   isDropDownOpen: false,
@@ -14,6 +15,7 @@ class UserMenu extends Component {
 
   componentDidMount() {
     window.addEventListener('click', this.handleWindowClick);
+    window.addEventListener('keydown', this.handleEscapeKeyPress, false);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -24,6 +26,7 @@ class UserMenu extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('click', this.handleWindowClick);
+    window.removeEventListener('keydown', this.handleEscapeKeyPress);
   }
 
   openDropDown = () => {
@@ -46,6 +49,12 @@ class UserMenu extends Component {
     }
   };
 
+  handleEscapeKeyPress = e => {
+    if (e.key === 'Escape') {
+      this.closeDropDown();
+    }
+  };
+
   render() {
     const { dropDownLogoImageSrc, children, className, userName } = this.props;
     const { isDropDownOpen } = this.state;
@@ -57,8 +66,8 @@ class UserMenu extends Component {
           <MaterialIcon icon="list" size={50} onClick={this.openDropDown} />
         </div>
         {isDropDownOpen && (
-          <UserDropDown className="userDropDown">
-            <span className="closeUserMenuBtn">
+          <UserDropDown className={styles.userDropDown}>
+            <span className={styles.closeUserMenuBtn}>
               <MaterialIcon
                 icon="close"
                 size="30"
@@ -70,7 +79,7 @@ class UserMenu extends Component {
               sint voluptatum nobis sequi quo minima neque praesentium
               repudiandae expedita! Quisquam?
             </span>
-            <Button type="button" text="Log Out" className="logOutBtn" />
+            <Button type="button" text="Log Out" className={styles.logOutBtn} />
           </UserDropDown>
         )}
         {children}
