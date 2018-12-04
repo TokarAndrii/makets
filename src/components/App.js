@@ -32,7 +32,7 @@ const INITIAL_STATE = {
 
 const tabsList = [
   {
-    title: 'Sign In',
+    title: 'Sign Up',
     content: (
       <RegisterForm
         title="Sign Up Form"
@@ -42,7 +42,7 @@ const tabsList = [
     ),
   },
   {
-    title: 'Sign Up',
+    title: 'Sign In',
     content: (
       <LoginForm
         title="Sign In Form"
@@ -61,17 +61,6 @@ class App extends Component {
     OrderHistiryApiServices.getOrdreHistoryAll().then(orders => {
       this.setState({ orders, isLoading: false });
     });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { orders } = this.state;
-    const prevOrders = prevState.orders;
-    if (prevOrders.length !== orders.length) {
-      OrderHistiryApiServices.getOrdreHistoryAll().then(ordersList => {
-        this.setIsLoadingTrue();
-        this.setState({ orders: ordersList, isLoading: false });
-      });
-    }
   }
 
   setIsLoadingTrue = () => this.setState({ isLoading: true });
