@@ -105,3 +105,31 @@ th:hover {
   left: 50%;
   top: 20%;
 }
+
+.FormsPageTabsHolder {
+  margin-top: 32px;
+  height: 400px;
+}
+
+.tabsBtnsHolder {
+  margin: 0;
+  padding: 0;
+  background-color: lightgray;
+  height: 45px;
+}
+
+.tabsBtns {
+  height: 45px;
+  padding: 16px 300px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  margin-left: 0;
+  border: 1px solid transparent;
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.activeTabsBtns {
+  composes: tabsBtns;
+  background-color: whitesmoke;
+}
