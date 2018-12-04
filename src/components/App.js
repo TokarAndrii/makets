@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import GridLoader from 'react-spinners/GridLoader';
 import Header from './shared/Header/Header';
-import Tabs from './Tabs/Tabs';
 import Logo from './shared/Logo/Logo';
+import Button from './shared/Button/Button';
 import Navigation from './shared/navigation/Navigation';
 import Modal from './shared/Modal/Modal';
 import UserMenu from './shared/UserMenu/UserMenu';
 import OrderHistory from './OrderHistory/OrderHistory';
 import Menu from './Menu/Menu';
-import AuthPage from './shared/AuthPage/AuthPage';
 import LoginForm from './Forms/LoginForm';
 import RegisterForm from './Forms/RegisterForm';
 import Comments from './shared/Comments/Comments';
+import FormsPageTabs from './FormsPageTabs/FormsPageTabs';
 import OrderHistoryAddForm from './OrderHistoryAddForm/OrderHistoryAddForm';
 import navList from '../assets/navigationList.json';
 import userCabinetMenu from '../assets/menu.json';
@@ -29,29 +29,6 @@ const INITIAL_STATE = {
   detailsOrder: [],
   isLoading: false,
 };
-
-const tabsList = [
-  {
-    title: 'Sign Up',
-    content: (
-      <RegisterForm
-        title="Sign Up Form"
-        buttontext="Sign Up"
-        className={styles.loginForm}
-      />
-    ),
-  },
-  {
-    title: 'Sign In',
-    content: (
-      <LoginForm
-        title="Sign In Form"
-        buttontext="Sign In"
-        className={styles.loginForm}
-      />
-    ),
-  },
-];
 
 class App extends Component {
   state = { ...INITIAL_STATE };
@@ -164,7 +141,7 @@ class App extends Component {
             </Modal>
           )
         )}
-        <Tabs tabs={tabsList} />
+
         <Header className={styles.header}>
           <Logo
             className={styles.logo}
@@ -211,20 +188,45 @@ class App extends Component {
             />
           </div>
         )}
-
-        <AuthPage className={styles.authPage}>
-          <LoginForm
-            title="Sign In Form"
-            buttontext="Sign In"
-            className={styles.loginForm}
-          />
-          <RegisterForm
-            title="Sign Up Form"
-            buttontext="Sign Up"
-            className={styles.loginForm}
-          />
-        </AuthPage>
         <Comments comments={comments} />
+        <FormsPageTabs>
+          {({ showSignUp, showSignIn, clickSignIn, clickSignUp }) => (
+            <div className={styles.FormsPageTabsHolder}>
+              <div className={styles.tabsBtnsHolder}>
+                <Button
+                  className={
+                    showSignIn ? styles.activeTabsBtns : styles.tabsBtns
+                  }
+                  type="text"
+                  text="Sign In"
+                  onClick={clickSignIn}
+                />
+                <Button
+                  className={
+                    showSignUp ? styles.activeTabsBtns : styles.tabsBtns
+                  }
+                  type="text"
+                  text="Sign Up"
+                  onClick={clickSignUp}
+                />
+              </div>
+              {showSignIn && (
+                <LoginForm
+                  title="Sign In Form"
+                  buttontext="Sign In"
+                  className={styles.loginForm}
+                />
+              )}
+              {showSignUp && (
+                <RegisterForm
+                  title="Sign Up Form"
+                  buttontext="Sign Up"
+                  className={styles.loginForm}
+                />
+              )}
+            </div>
+          )}
+        </FormsPageTabs>
       </div>
     );
   }
