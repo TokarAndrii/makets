@@ -142,24 +142,6 @@ class App extends Component {
             </Modal>
           )
         )}
-
-        {/* <Header className={styles.header}>
-          <Logo
-            className={styles.logo}
-            logoSrc="https://placeimg.com/100/100/tech"
-            logoAlt="placeimg tech logo"
-          />
-          <Navigation
-            className={styles.navigatoinList}
-            navigationMenuList={navList}
-          />
-          <UserMenu
-            handleOpenDropDownMenu={this.handleOpenDropDownMenu}
-            userName="Some Name"
-            className={styles.userMenu}
-            dropDownLogoImageSrc="https://placeimg.com/100/80/people"
-          />
-        </Header> */}
         <Header className={styles.header}>
           <Logo
             className={styles.logo}

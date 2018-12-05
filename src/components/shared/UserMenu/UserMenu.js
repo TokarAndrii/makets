@@ -57,17 +57,20 @@ class UserMenu extends Component {
 
   render() {
     const {
-      dropDownLogoImageSrc,
       children,
       className,
-      userName,
+      user: { name, image, email, phone, age },
       onSignOut,
     } = this.props;
     const { isDropDownOpen } = this.state;
     return (
       <div className={className} ref={this.containerRef}>
-        <img src={dropDownLogoImageSrc} alt="useMenuDropdownLogo" />
-        <h3 style={{ margin: '0px 16px' }}>Hello! {userName}</h3>
+        <img
+          src={image}
+          alt="useMenuDropdownLogo"
+          style={{ width: '100px', height: '100px' }}
+        />
+        <h3 style={{ margin: '0px 16px' }}>Hello! {name}</h3>
         <div style={{ cursor: 'pointer' }}>
           <MaterialIcon icon="list" size={50} onClick={this.openDropDown} />
         </div>
@@ -81,9 +84,12 @@ class UserMenu extends Component {
               />
             </span>
             <span style={{ marginBottom: '64px' }}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor,
-              sint voluptatum nobis sequi quo minima neque praesentium
-              repudiandae expedita! Quisquam?
+              <p>
+                <b>Name:</b> {name} Age:{age}
+              </p>
+              <p>
+                <b>Contacts:</b> Email:{email};<br /> Phone: {phone}
+              </p>
             </span>
             <Button
               type="button"
