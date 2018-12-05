@@ -1,0 +1,19 @@
+.videoPlayer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+}
+
+.playerBtn {
+  display: inline-block;
+  margin: 8px;
+}
+
+.btnsHolder {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

@@ -13,6 +13,7 @@ import RegisterForm from './Forms/RegisterForm';
 import Comments from './shared/Comments/Comments';
 import FormsPageTabs from './FormsPageTabs/FormsPageTabs';
 import OrderHistoryAddForm from './OrderHistoryAddForm/OrderHistoryAddForm';
+import VideoPlayer from './shared/utils/VideoPlayer';
 import navList from '../assets/navigationList.json';
 import userCabinetMenu from '../assets/menu.json';
 import commentsHistory from '../assets/comments.json';
@@ -141,7 +142,6 @@ class App extends Component {
             </Modal>
           )
         )}
-
         <Header className={styles.header}>
           <Logo
             className={styles.logo}
@@ -227,6 +227,7 @@ class App extends Component {
             </div>
           )}
         </FormsPageTabs>
+        <VideoPlayer src=" http://techslides.com/demos/sample-videos/small.mp4" />
       </div>
     );
   }
