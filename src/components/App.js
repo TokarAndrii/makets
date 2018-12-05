@@ -6,8 +6,6 @@ import Logo from './shared/Logo/Logo';
 import Button from './shared/Button/Button';
 import Navigation from './shared/navigation/Navigation';
 import Modal from './shared/Modal/Modal';
-// eslint-disable-line
-import UserMenu from './shared/UserMenu/UserMenu';
 import OrderHistory from './OrderHistory/OrderHistory';
 import AuthManager from './AuthManager/AuthManager';
 import Menu from './Menu/Menu';

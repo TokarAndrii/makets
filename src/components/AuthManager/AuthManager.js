@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 // eslint-disable-line
-import AuthContext from '../../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 import UserMenu from '../shared/UserMenu/UserMenu';
 import Button from '../shared/Button/Button';
 import styles from './AuthManager.module.css';
 
 export default class AuthManager extends Component {
-  static contextType = AuthContext.Consumer;
+  static contextType = AuthContext;
 
   componentDidMount() {
-    console.log(this.context);
+    console.log(this.context, 'this.context componentDidMount');
   }
 
   render() {
     const { isAuthenticated, onSignIn, onSignOut, user } = this.context;
-    return isAuthenticated ? (
+    return console.log(this.context, 'this.context render') ||
+      isAuthenticated ? (
       <UserMenu
         handleOpenDropDownMenu={this.handleOpenDropDownMenu}
         userName="Some Name"
@@ -28,10 +29,7 @@ export default class AuthManager extends Component {
         className={styles.loginBtn}
         type="text"
         text="Sign In"
-        onClick={() => {
-          console.log('click');
-          onSignIn();
-        }}
+        onClick={onSignIn}
       />
     );
   }

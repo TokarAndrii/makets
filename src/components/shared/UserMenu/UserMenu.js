@@ -56,7 +56,13 @@ class UserMenu extends Component {
   };
 
   render() {
-    const { dropDownLogoImageSrc, children, className, userName } = this.props;
+    const {
+      dropDownLogoImageSrc,
+      children,
+      className,
+      userName,
+      onSignOut,
+    } = this.props;
     const { isDropDownOpen } = this.state;
     return (
       <div className={className} ref={this.containerRef}>
@@ -79,7 +85,12 @@ class UserMenu extends Component {
               sint voluptatum nobis sequi quo minima neque praesentium
               repudiandae expedita! Quisquam?
             </span>
-            <Button type="button" text="Log Out" className={styles.logOutBtn} />
+            <Button
+              type="button"
+              text="Log Out"
+              className={styles.logOutBtn}
+              onClick={onSignOut}
+            />
           </UserDropDown>
         )}
         {children}

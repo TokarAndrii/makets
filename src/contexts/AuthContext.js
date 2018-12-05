@@ -2,7 +2,7 @@ import React, { Component, createContext } from 'react';
 import userInfo from '../assets/user-info.json';
 
 export const AuthContext = createContext({
-  isAuthenticated: false,
+  isAuthenticated: true,
   user: {},
   onSignIn: () => null,
   onSignOut: () => null,
