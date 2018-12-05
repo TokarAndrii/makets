@@ -130,6 +130,7 @@ th:hover {
 }
 
 .activeTabsBtns {
+  /* eslint-disable-line */
   composes: tabsBtns;
   background-color: whitesmoke;
 }

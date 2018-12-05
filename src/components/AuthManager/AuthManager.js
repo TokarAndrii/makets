@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// eslint-disable-line
 import AuthContext from '../../contexts/AuthContext';
 import UserMenu from '../shared/UserMenu/UserMenu';
 import Button from '../shared/Button/Button';
