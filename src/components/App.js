@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GridLoader from 'react-spinners/GridLoader';
+import AuthContextProvider from '../contexts/AuthContext';
 import Header from './shared/Header/Header';
 import Logo from './shared/Logo/Logo';
 import Button from './shared/Button/Button';
@@ -7,6 +8,7 @@ import Navigation from './shared/navigation/Navigation';
 import Modal from './shared/Modal/Modal';
 import UserMenu from './shared/UserMenu/UserMenu';
 import OrderHistory from './OrderHistory/OrderHistory';
+import AuthManager from './AuthManager/AuthManager';
 import Menu from './Menu/Menu';
 import LoginForm from './Forms/LoginForm';
 import RegisterForm from './Forms/RegisterForm';
@@ -142,7 +144,7 @@ class App extends Component {
           )
         )}
 
-        <Header className={styles.header}>
+        {/* <Header className={styles.header}>
           <Logo
             className={styles.logo}
             logoSrc="https://placeimg.com/100/100/tech"
@@ -158,6 +160,20 @@ class App extends Component {
             className={styles.userMenu}
             dropDownLogoImageSrc="https://placeimg.com/100/80/people"
           />
+        </Header> */}
+        <Header className={styles.header}>
+          <Logo
+            className={styles.logo}
+            logoSrc="https://placeimg.com/100/100/tech"
+            logoAlt="placeimg tech logo"
+          />
+          <Navigation
+            className={styles.navigatoinList}
+            navigationMenuList={navList}
+          />
+          <AuthContextProvider>
+            <AuthManager />
+          </AuthContextProvider>
         </Header>
         <Menu
           menuList={menuFiltered}
