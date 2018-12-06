@@ -7,10 +7,6 @@ import styles from './AuthManager.module.css';
 export default class AuthManager extends Component {
   static contextType = AuthContext;
 
-  componentDidMount() {
-    // console.log(this.context, 'this.context componentDidMount');
-  }
-
   render() {
     const { isAuthenticated, onSignIn, onSignOut, user } = this.context;
     return isAuthenticated ? (

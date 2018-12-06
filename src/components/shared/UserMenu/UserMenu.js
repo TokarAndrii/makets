@@ -84,11 +84,28 @@ class UserMenu extends Component {
               />
             </span>
             <span style={{ marginBottom: '64px' }}>
-              <p>
-                <b>Name:</b> {name} Age:{age}
+              <p className={styles.UserDropDownTextRow}>
+                <b>Name:</b> {name}
               </p>
-              <p>
-                <b>Contacts:</b> Email:{email};<br /> Phone: {phone}
+              <p className={styles.UserDropDownTextRow}>
+                <b> Age:</b>:{age}
+              </p>
+              <p className={styles.UserDropDownTextRow}>
+                <b
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                  }}
+                >
+                  Contacts:
+                </b>
+                <p className={styles.UserDropDownTextRow} />
+                <em>Email:</em>
+                {email}
+              </p>
+              <p className={styles.UserDropDownTextRow}>
+                <em>Phone:</em> {phone}
               </p>
             </span>
             <Button
