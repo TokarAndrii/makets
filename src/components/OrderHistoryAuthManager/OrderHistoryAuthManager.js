@@ -16,7 +16,6 @@ export default class OrderHistoryAuthManager extends Component {
         className={styles.orderTable}
         onShowDetails={onShowDetails}
         onDelete={onDelete}
-        onAdd={onAdd}
       />
     ) : (
       <>
