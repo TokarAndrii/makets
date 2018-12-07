@@ -16,15 +16,15 @@ import Comments from './shared/Comments/Comments';
 import FormsPageTabs from './FormsPageTabs/FormsPageTabs';
 import navList from '../assets/navigationList.json';
 import userCabinetMenu from '../assets/menu.json';
-import commentsHistory from '../assets/comments.json';
 import * as OrderHistiryApiServices from '../services/order-histiory-api/order-histiry-api-services';
+import * as CommentsApiServices from '../services/comments-api/comments-api-services';
 import styles from './App.module.css';
 
 const INITIAL_STATE = {
   menuList: userCabinetMenu,
   userName: '',
   filter: '',
-  comments: commentsHistory,
+  comments: [],
   isModalOpen: false,
   orders: [],
   detailsOrder: [],
@@ -38,6 +38,10 @@ class App extends Component {
     this.setIsLoadingTrue();
     OrderHistiryApiServices.getOrdreHistoryAll().then(orders => {
       this.setState({ orders, isLoading: false });
+    });
+    this.setIsLoadingTrue();
+    CommentsApiServices.getAllComments().then(comments => {
+      this.setState({ comments, isLoading: false });
     });
   }
 
@@ -102,6 +106,30 @@ class App extends Component {
       });
     });
     this.handleCloseModal();
+  };
+
+  handleAddComment = comment => {
+    this.setIsLoadingTrue();
+    CommentsApiServices.addComment(comment).then(newComment => {
+      this.setState(state => ({
+        comments: [...state.comments, newComment],
+        isLoading: false,
+      }));
+    });
+  };
+
+  handleDeleteCommentById = id => {
+    this.setIsLoadingTrue();
+    CommentsApiServices.deleteCommentById(id).then(isOk => {
+      if (!isOk) {
+        return;
+      }
+      const { comments } = this.state;
+      this.setState({
+        comments: comments.filter(item => item.id !== id),
+        isLoading: false,
+      });
+    });
   };
 
   render() {
@@ -178,7 +206,11 @@ class App extends Component {
             onDelete={this.handleDeleteByIdFromOrderHistory}
             onAdd={this.handleAddOrderHistory}
           />
-          <Comments comments={comments} />
+          <Comments
+            comments={comments}
+            onAdd={this.handleAddComment}
+            onDelete={this.handleDeleteCommentById}
+          />
 
           <FormsPageTabs>
             {({ showSignUp, showSignIn, clickSignIn, clickSignUp }) => (
