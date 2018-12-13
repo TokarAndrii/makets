@@ -32,8 +32,8 @@ class Comments extends Component {
       <div className="commensBlock">
         <h3>Comments Block</h3>
         {comments.map(comment => (
-          <div className={styles.holder}>
-            <div className="commentsHolder" key={comment.id}>
+          <div className={styles.holder} key={comment.id}>
+            <div className="commentsHolder">
               <div>
                 <span className="commentsDate">{comment.date}</span>
                 <span className="commentsRate">{comment.rate}&#9733;</span>

@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import GridLoader from 'react-spinners/GridLoader';
+
+import HomePage from '../pages/home/Home';
+import About from '../pages/about/About';
+import Delivery from '../pages/delivery/Delivery';
+import MenuPage from '../pages/menu/MenuPage';
+import Contacts from '../pages/contacts/Contacts';
+import AuthPage from '../pages/authPage/AuthPage';
+import NotFound from '../pages/notfound/NotFound';
+import MenuItemPage from '../pages/menu-item-page/MenuItemPage';
+import CommentsPage from '../pages/comments/CommentsPage';
+
 import AuthContextProvider from '../contexts/AuthContext';
 import Header from './shared/Header/Header';
 import Logo from './shared/Logo/Logo';
@@ -8,25 +20,24 @@ import Navigation from './shared/navigation/Navigation';
 import Modal from './shared/Modal/Modal';
 import OrderHistory from './OrderHistory/OrderHistory';
 import AuthManager from './AuthManager/AuthManager';
-import Menu from './Menu/Menu';
-import OrderHistoryAuthManager from './OrderHistoryAuthManager/OrderHistoryAuthManager';
 import LoginForm from './Forms/LoginForm';
 import RegisterForm from './Forms/RegisterForm';
-import Comments from './shared/Comments/Comments';
 import FormsPageTabs from './FormsPageTabs/FormsPageTabs';
-import navList from '../assets/navigationList.json';
-import userCabinetMenu from '../assets/menu.json';
+import navList from '../assets/navigationList';
+
 import * as OrderHistiryApiServices from '../services/order-histiory-api/order-histiry-api-services';
 import * as CommentsApiServices from '../services/comments-api/comments-api-services';
+import * as MenuApiServices from '../services/menu-api/menu-api-services';
+import routes from '../assets/routes';
+
 import styles from './App.module.css';
+import OrdersHistoryPage from '../pages/orders-history/OrdersHistoryPage';
 
 const INITIAL_STATE = {
-  menuList: userCabinetMenu,
+  menuList: [],
   userName: '',
   filter: '',
-  comments: [],
   isModalOpen: false,
-  orders: [],
   detailsOrder: [],
   isLoading: false,
 };
@@ -37,11 +48,13 @@ class App extends Component {
   componentDidMount() {
     this.setIsLoadingTrue();
     OrderHistiryApiServices.getOrdreHistoryAll().then(orders => {
-      this.setState({ orders, isLoading: false });
+      this.setState({ orders });
     });
-    this.setIsLoadingTrue();
     CommentsApiServices.getAllComments().then(comments => {
-      this.setState({ comments, isLoading: false });
+      this.setState({ comments });
+    });
+    MenuApiServices.getAllMenu().then(menuList => {
+      this.setState({ menuList, isLoading: false });
     });
   }
 
@@ -133,16 +146,7 @@ class App extends Component {
   };
 
   render() {
-    const {
-      menuList,
-      filter,
-      comments,
-      isModalOpen,
-      orders,
-      detailsOrder,
-      isLoading,
-    } = this.state;
-    const menuFiltered = this.getFilteredMenu(filter, menuList);
+    const { isModalOpen, detailsOrder, isLoading } = this.state;
 
     return (
       <AuthContextProvider>
@@ -180,16 +184,81 @@ class App extends Component {
             <Navigation
               className={styles.navigatoinList}
               navigationMenuList={navList}
+              activeClassName={styles.activeNavLink}
             />
 
             <AuthManager />
           </Header>
-          <Menu
-            menuList={menuFiltered}
-            className={styles.menu}
-            filter={filter}
-            onFilterChange={this.handleFilterChange}
-          />
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path={routes.ABOUT} component={About} />
+            <Route path={routes.DELIVERY} component={Delivery} />
+            <Route path={routes.CONTACTS} component={Contacts} />
+            <Route path={routes.COMMENTS} component={CommentsPage} />
+            <Route path={routes.ORDER_HISTORY} component={OrdersHistoryPage} />
+            <Route exact path={routes.MENU} component={MenuPage} />
+            <Route path={routes.MENU_ITEM} component={MenuItemPage} />
+            <Route
+              path={routes.AUTH}
+              render={props => (
+                <>
+                  <h1>Authentification page Title</h1>
+                  <AuthPage {...props}>
+                    {() => (
+                      <FormsPageTabs>
+                        {({
+                          showSignUp,
+                          showSignIn,
+                          clickSignIn,
+                          clickSignUp,
+                        }) => (
+                          <div className={styles.FormsPageTabsHolder}>
+                            <div className={styles.tabsBtnsHolder}>
+                              <Button
+                                className={
+                                  showSignIn
+                                    ? styles.activeTabsBtns
+                                    : styles.tabsBtns
+                                }
+                                type="text"
+                                text="Sign In"
+                                onClick={clickSignIn}
+                              />
+                              <Button
+                                className={
+                                  showSignUp
+                                    ? styles.activeTabsBtns
+                                    : styles.tabsBtns
+                                }
+                                type="text"
+                                text="Sign Up"
+                                onClick={clickSignUp}
+                              />
+                            </div>
+                            {showSignIn && (
+                              <LoginForm
+                                title="Sign In Form"
+                                buttontext="Sign In"
+                                className={styles.loginForm}
+                              />
+                            )}
+                            {showSignUp && (
+                              <RegisterForm
+                                title="Sign Up Form"
+                                buttontext="Sign Up"
+                                className={styles.loginForm}
+                              />
+                            )}
+                          </div>
+                        )}
+                      </FormsPageTabs>
+                    )}
+                  </AuthPage>
+                </>
+              )}
+            />
+            <Route component={NotFound} />
+          </Switch>
           {isLoading && (
             <div className={styles.isLoadingSpinner}>
               <GridLoader
@@ -200,56 +269,6 @@ class App extends Component {
               />
             </div>
           )}
-          <OrderHistoryAuthManager
-            orderList={orders}
-            onShowDetails={this.handleGetDetailsFromOrderHistory}
-            onDelete={this.handleDeleteByIdFromOrderHistory}
-            onAdd={this.handleAddOrderHistory}
-          />
-          <Comments
-            comments={comments}
-            onAdd={this.handleAddComment}
-            onDelete={this.handleDeleteCommentById}
-          />
-
-          <FormsPageTabs>
-            {({ showSignUp, showSignIn, clickSignIn, clickSignUp }) => (
-              <div className={styles.FormsPageTabsHolder}>
-                <div className={styles.tabsBtnsHolder}>
-                  <Button
-                    className={
-                      showSignIn ? styles.activeTabsBtns : styles.tabsBtns
-                    }
-                    type="text"
-                    text="Sign In"
-                    onClick={clickSignIn}
-                  />
-                  <Button
-                    className={
-                      showSignUp ? styles.activeTabsBtns : styles.tabsBtns
-                    }
-                    type="text"
-                    text="Sign Up"
-                    onClick={clickSignUp}
-                  />
-                </div>
-                {showSignIn && (
-                  <LoginForm
-                    title="Sign In Form"
-                    buttontext="Sign In"
-                    className={styles.loginForm}
-                  />
-                )}
-                {showSignUp && (
-                  <RegisterForm
-                    title="Sign Up Form"
-                    buttontext="Sign Up"
-                    className={styles.loginForm}
-                  />
-                )}
-              </div>
-            )}
-          </FormsPageTabs>
         </div>
       </AuthContextProvider>
     );

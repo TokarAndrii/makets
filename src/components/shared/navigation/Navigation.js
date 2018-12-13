@@ -1,12 +1,18 @@
 import React from 'react';
-import './styles.css';
+import { NavLink } from 'react-router-dom';
+import styles from './Navigation.module.css';
 
-const Navigation = ({ navigationMenuList, className }) => (
+const Navigation = ({ navigationMenuList, className, activeClassName }) => (
   <ul className={className}>
     {navigationMenuList.map(navigationMenuListItem => (
-      <li className="navigationItem" key={navigationMenuListItem.id}>
+      <NavLink
+        className={styles.navigationItem}
+        key={navigationMenuListItem.id}
+        to={navigationMenuListItem.path}
+        activeClassName={activeClassName}
+      >
         {navigationMenuListItem.name}
-      </li>
+      </NavLink>
     ))}
   </ul>
 );

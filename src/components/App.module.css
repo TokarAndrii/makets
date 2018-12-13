@@ -28,7 +28,6 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-left: 10%;
 }
 
 .menu {
@@ -123,4 +122,9 @@ th:hover {
 .activeTabsBtns {
   composes: tabsBtns;
   background-color: whitesmoke;
+}
+
+.activeNavLink {
+  background-color: rgb(240, 50, 230);
+  color: white;
 }

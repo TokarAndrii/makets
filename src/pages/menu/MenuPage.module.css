@@ -1,0 +1,31 @@
+.isLoadingSpinner {
+  display: block;
+  margin: 0 auto;
+  border-color: black;
+  position: fixed;
+  left: 50%;
+  top: 20%;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.commentsLink {
+  display: inline-block;
+  font-weight: bold;
+  margin: 32px;
+  padding: 16px 32px;
+  width: 200px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.commentsLink:hover {
+  background-color: rgb(0, 0, 128);
+  color: white;
+}

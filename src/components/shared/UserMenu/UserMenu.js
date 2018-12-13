@@ -2,6 +2,7 @@ import React, { Component, createRef } from 'react';
 import MaterialIcon from 'material-icons-react';
 import UserDropDown from '../../UserDropDown/UserDropDown';
 import Button from '../Button/Button';
+import { AuthContext } from '../../../contexts/AuthContext';
 import styles from './UserMenu.module.css';
 
 const INITIAL_STATE = {
@@ -9,6 +10,8 @@ const INITIAL_STATE = {
 };
 
 class UserMenu extends Component {
+  static contextType = AuthContext;
+
   state = { ...INITIAL_STATE };
 
   containerRef = createRef();

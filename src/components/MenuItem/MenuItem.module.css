@@ -1,0 +1,48 @@
+.menuItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  width: 95%;
+  height: 550px;
+  padding: 16px;
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  margin-top: 32px;
+}
+
+.menuItemImage {
+  width: 400px;
+  height: 300px;
+  margin-top: 32px;
+}
+
+.rateHolders {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 25%;
+}
+
+.rateItem {
+  width: 50px;
+  cursor: pointer;
+}
+
+.detailsBtn {
+  height: 45px;
+  padding: 16px 64px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  margin-left: 0;
+  margin-top: 16px;
+}
+
+.detailsBtn:hover {
+  background-color: rgb(0, 0, 128);
+  color: white;
+}
