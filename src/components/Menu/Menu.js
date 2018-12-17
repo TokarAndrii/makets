@@ -5,7 +5,13 @@ import Filter from '../shared/Filter/Filter';
 import routes from '../../assets/routes';
 import styles from './Menu.module.css';
 
-const Menu = ({ menuList = [], className, filter, onFilterChange }) => (
+const Menu = ({
+  menuList = [],
+  className,
+  filter,
+  onFilterChange,
+  location,
+}) => (
   <div>
     <div style={{ width: '100%', height: '60px', lineHeight: '60px' }}>
       <Filter
@@ -16,7 +22,14 @@ const Menu = ({ menuList = [], className, filter, onFilterChange }) => (
     </div>
     <div className={className}>
       {menuList.map(menuListItem => (
-        <Link to={`${routes.MENU}/${menuListItem.id}`} key={menuListItem.name}>
+        <Link
+          // to={`${routes.MENU}/${menuListItem.id}`}
+          key={menuListItem.name}
+          to={{
+            pathname: `${routes.MENU}/${menuListItem.id}`,
+            state: { from: location },
+          }}
+        >
           <div className={styles.menuItemLink}>
             <MenuItem
               id={menuListItem.id}

@@ -15,7 +15,7 @@ export default class Home extends Component {
         <Switch>
           <Route exact path="/comments" component={OrderHistoryPage} />
         </Switch>
-        <h1 className={styles.title}>Welcome to Tokar's Foodies </h1>
+        <h1 className={styles.title}>Welcome to Tokars Foodies </h1>
         {isAuthenticated && (
           <Link className={styles.link} to={routes.ORDER_HISTORY}>
             Orders History

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import uuidv4 from 'uuid/v4';
 import GridLoader from 'react-spinners/GridLoader';
 import { colorPalette } from 'material-icons-react';
+import Button from '../../components/shared/Button/Button';
 import * as MenuApiServices from '../../services/menu-api/menu-api-services';
 import StarRateItem from '../../components/shared/StarRateItem/StarRateItem';
 import styles from './MenuItemPage.module.css';
@@ -40,6 +41,24 @@ export default class MenuItemPage extends Component {
     );
   }
 
+  handleGoBack = () => {
+    const { location } = this.props;
+    const { state } = location;
+    const { category } = this.state;
+
+    if (state) {
+      const { history } = this.props;
+      return history.push(state.from);
+    }
+
+    const { history } = this.props;
+
+    return history.push({
+      pathname: '/menu',
+      search: `?category=${category}`,
+    });
+  };
+
   setIsLoadingTrue = () => this.setState({ isLoading: true });
 
   render() {
@@ -66,6 +85,11 @@ export default class MenuItemPage extends Component {
           </div>
         )}
         <div className={styles.menuItem}>
+          <Button
+            text="Back to menu"
+            className={styles.loginBtn}
+            onClick={this.handleGoBack}
+          />
           <div>
             <img className={styles.menuItemImage} src={image} alt={name} />
             <h3>{name}</h3>

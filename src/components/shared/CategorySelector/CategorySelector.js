@@ -2,9 +2,15 @@ import React from 'react';
 import styles from './CategorySelector.module.css';
 
 const CategorySelector = ({ options, value, onChange }) => (
-  <select value={value} onChange={onChange} className={styles.select}>
+  <select
+    value={value}
+    onChange={e => onChange(e.target.value)}
+    className={styles.select}
+  >
     {options.map(optItem => (
-      <option key={optItem.id}>{optItem.name}</option>
+      <option key={optItem.id} value={optItem.name}>
+        {optItem.name}
+      </option>
     ))}
   </select>
 );
