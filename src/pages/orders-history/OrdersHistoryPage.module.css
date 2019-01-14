@@ -1,0 +1,15 @@
+.isLoadingSpinner {
+  display: block;
+  margin: 0 auto;
+  border-color: black;
+  position: fixed;
+  left: 50%;
+  top: 20%;
+}
+
+.orderTable {
+  width: 98%;
+  margin-top: 32px;
+  padding: 8px;
+  border-bottom: 2px solid rgb(170, 110, 40);
+}

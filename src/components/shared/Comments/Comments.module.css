@@ -1,0 +1,21 @@
+.holder {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.commentRmBtn {
+  margin: 10px;
+  height: 65px;
+  padding: 16px 64px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  background-color: rgb(255, 69, 0);
+  margin-left: 32px;
+}
+
+.commentRmBtn:hover {
+  background-color: rgb(0, 0, 128);
+  color: white;
+}

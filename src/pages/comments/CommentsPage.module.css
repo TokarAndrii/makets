@@ -1,0 +1,8 @@
+.isLoadingSpinner {
+  display: block;
+  margin: 0 auto;
+  border-color: black;
+  position: fixed;
+  left: 50%;
+  top: 20%;
+}
