@@ -2,81 +2,86 @@ import React, { Component } from 'react';
 import queryString from 'query-string';
 import { Link, Switch, Route } from 'react-router-dom';
 import GridLoader from 'react-spinners/GridLoader';
-import { AuthContext } from '../../contexts/AuthContext';
+import { connect } from 'react-redux';
+
 import CommentsPage from '../comments/CommentsPage';
 import Menu from '../../components/Menu/Menu';
 import AddMenuItem from '../add-menu/AddMenuItem';
 import CategorySelector from '../../components/shared/CategorySelector/CategorySelector';
 import Button from '../../components/shared/Button/Button';
 import * as MenuApiServices from '../../services/menu-api/menu-api-services';
-import * as CategoriesApiServices from '../../services/categories-api/categoriesApiServices';
+
 import routes from '../../assets/routes';
+import menuOperations from './menuOperations';
 
 import styles from './MenuPage.module.css';
 
 const INITIAL_STATE = {
-  menuList: [],
   filter: '',
-  isLoading: false,
-  categories: [],
 };
 
 const getCategoryFromProps = props =>
   queryString.parse(props.location.search).category;
 
-export default class MenuPage extends Component {
-  static contextType = AuthContext;
+class MenuPage extends Component {
+  // static contextType = AuthContext;
 
   state = { ...INITIAL_STATE };
 
+  // componentDidMount() {
+  //   CategoriesApiServices.getAllCategories().then(data => {
+  //     this.setState({ categories: data });
+  //   });
+  //   const category = getCategoryFromProps(this.props);
+
+  //   if (!category) {
+  //     const { history } = this.props;
+  //     const { location } = this.props;
+  //     return history.replace({
+  //       pathname: location.pathname,
+  //       search: 'category=all',
+  //     });
+  //   }
+
+  //   this.setIsLoadingTrue();
+
+  //   return MenuApiServices.getAllMenuByCategory(category).then(menuList => {
+  //     this.setState({ menuList, isLoading: false });
+  //   });
+  // }
+
   componentDidMount() {
-    CategoriesApiServices.getAllCategories().then(data => {
-      this.setState({ categories: data });
-    });
-    const category = getCategoryFromProps(this.props);
-
-    if (!category) {
-      const { history } = this.props;
-      const { location } = this.props;
-      return history.replace({
-        pathname: location.pathname,
-        search: 'category=all',
-      });
-    }
-
-    this.setIsLoadingTrue();
-
-    return MenuApiServices.getAllMenuByCategory(category).then(menuList => {
-      this.setState({ menuList, isLoading: false });
-    });
+    const { fetchMenuList, fetchMenuCategories } = this.props;
+    fetchMenuList();
+    fetchMenuCategories();
   }
 
-  componentDidUpdate(prevProps) {
-    const prevCategory = getCategoryFromProps(prevProps);
-    const nextCategory = getCategoryFromProps(this.props);
+  // componentDidUpdate(prevProps) {
+  //   const prevCategory = getCategoryFromProps(prevProps);
+  //   const nextCategory = getCategoryFromProps(this.props);
 
-    const category = getCategoryFromProps(this.props);
+  //   const category = getCategoryFromProps(this.props);
 
-    if (!category) {
-      const { history } = this.props;
-      const { location } = this.props;
-      return history.replace({
-        pathname: location.pathname,
-        search: 'category=all',
-      });
-    }
+  //   if (!category) {
+  //     const { history } = this.props;
+  //     const { location } = this.props;
+  //     return history.replace({
+  //       pathname: location.pathname,
+  //       search: 'category=all',
+  //     });
+  //   }
 
-    if (prevCategory !== nextCategory) {
-      this.setIsLoadingTrue();
-      MenuApiServices.getAllMenuByCategory(nextCategory).then(menuList => {
-        this.setState({ menuList, isLoading: false });
-      });
-    }
+  //   if (prevCategory !== nextCategory) {
+  //     this.setIsLoadingTrue();
+  //     MenuApiServices.getAllMenuByCategory(nextCategory).then(menuList => {
+  //       this.setState({ menuList, isLoading: false });
+  //     });
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 
-  setIsLoadingTrue = () => this.setState({ isLoading: true });
+  // setIsLoadingTrue = () => this.setState({ isLoading: true });
 
   handleFilterChange = filter => {
     this.setState({ filter });
@@ -115,8 +120,9 @@ export default class MenuPage extends Component {
     );
 
   render() {
-    const { menuList, isLoading, filter, categories } = this.state;
-    const menuFiltered = this.getFilteredMenu(filter, menuList);
+    const { filter } = this.state;
+    const { menuList, isLoading, categories } = this.props;
+    // const menuFiltered = this.getFilteredMenu(filter, menuList);
     const currentCategory = getCategoryFromProps(this.props);
     const { isAuthenticated } = this.context;
 
@@ -158,7 +164,7 @@ export default class MenuPage extends Component {
         )}
 
         <Menu
-          menuList={menuFiltered}
+          menuList={menuList}
           className={styles.menu}
           filter={filter}
           onFilterChange={this.handleFilterChange}
@@ -174,3 +180,19 @@ export default class MenuPage extends Component {
     );
   }
 }
+
+const mdtp = {
+  fetchMenuList: menuOperations.fetchMenuList,
+  fetchMenuCategories: menuOperations.fetchMenuCategories,
+};
+
+const mstp = state => ({
+  menuList: state.menuList,
+  isLoading: state.isLoading,
+  categories: state.menuCategories,
+});
+
+export default connect(
+  mstp,
+  mdtp,
+)(MenuPage);
