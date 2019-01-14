@@ -13,19 +13,15 @@ import menuApiServices from '../../services/menu-api/menu-api-services';
 
 import routes from '../../assets/routes';
 import menuOperations from './menuOperations';
+import menuActions from './duck/menuActions';
+import menuSelectors from './duck/menuSelectors';
 
 import styles from './MenuPage.module.css';
-
-const INITIAL_STATE = {
-  filter: '',
-};
 
 const getCategoryFromProps = props =>
   queryString.parse(props.location.search).category;
 
 class MenuPage extends Component {
-  state = { ...INITIAL_STATE };
-
   componentDidMount() {
     const category = getCategoryFromProps(this.props);
     if (!category) {
@@ -68,7 +64,8 @@ class MenuPage extends Component {
   // setIsLoadingTrue = () => this.setState({ isLoading: true });
 
   handleFilterChange = filter => {
-    this.setState({ filter });
+    const { handleFilterChange } = this.props;
+    handleFilterChange(filter);
   };
 
   handleAddMenuItem = menuItem => {
@@ -98,74 +95,64 @@ class MenuPage extends Component {
     });
   };
 
-  getFilteredMenu = (filter, menuArray) => {
-    console.log(filter, ' filter');
-    console.log(menuArray, ' menuArray');
-    return menuArray.filter(menuItem =>
-      menuItem.name.toLowerCase().includes(filter.toLowerCase()),
-    );
-  };
-
   render() {
-    const { filter } = this.state;
-    const { menuList, isLoading, categories } = this.props;
-    const menuFiltered = this.getFilteredMenu(filter, menuList);
+    const { isLoading, categories, filter, menuListFiltered } = this.props;
+
     const currentCategory = getCategoryFromProps(this.props);
+
     const { isAuthenticated } = this.context;
 
     return (
-      console.log(menuFiltered, 'menuFiltered') || (
-        <>
-          <Switch>
-            <Route exact path="/comments" component={CommentsPage} />
-          </Switch>
-          {isLoading && (
-            <div className={styles.isLoadingSpinner}>
-              <GridLoader
-                size={20}
-                color="rgb(0, 128, 128)"
-                loading
-                className={styles.isLoadingSpinner}
-              />
-            </div>
-          )}
-          <h1>Our Menu</h1>
-          <div>
-            <CategorySelector
-              options={categories}
-              value={currentCategory}
-              onChange={this.handleCategoryChange}
-            />
-            <Button
-              text="Clear selector"
-              className={styles.clearSelectorBtn}
-              onClick={this.handleClearSelector}
+      <>
+        <Switch>
+          <Route exact path="/comments" component={CommentsPage} />
+        </Switch>
+        {isLoading && (
+          <div className={styles.isLoadingSpinner}>
+            <GridLoader
+              size={20}
+              color="rgb(0, 128, 128)"
+              loading
+              className={styles.isLoadingSpinner}
             />
           </div>
-
-          {isAuthenticated && (
-            <div>
-              <Link className={styles.commentsLink} to="/menu/add">
-                Add Menu Item
-              </Link>
-            </div>
-          )}
-
-          <Menu
-            menuList={menuFiltered}
-            className={styles.menu}
-            filter={filter}
-            onFilterChange={this.handleFilterChange}
-            {...this.props}
+        )}
+        <h1>Our Menu</h1>
+        <div>
+          <CategorySelector
+            options={categories}
+            value={currentCategory}
+            onChange={this.handleCategoryChange}
           />
-          <Link className={styles.commentsLink} to="/comments">
-            Read Comments About Us
-          </Link>
-          <Switch>
-            <Route exact path={routes.ADD_MENU} component={AddMenuItem} />
-          </Switch>
-        </>
-      )
+          <Button
+            text="Clear selector"
+            className={styles.clearSelectorBtn}
+            onClick={this.handleClearSelector}
+          />
+        </div>
+
+        {isAuthenticated && (
+          <div>
+            <Link className={styles.commentsLink} to="/menu/add">
+              Add Menu Item
+            </Link>
+          </div>
+        )}
+
+        <Menu
+          menuList={menuListFiltered}
+          className={styles.menu}
+          filter={filter}
+          onFilterChange={this.handleFilterChange}
+          {...this.props}
+        />
+        <Link className={styles.commentsLink} to="/comments">
+          Read Comments About Us
+        </Link>
+        <Switch>
+          <Route exact path={routes.ADD_MENU} component={AddMenuItem} />
+        </Switch>
+      </>
     );
   }
 }
@@ -173,12 +160,14 @@ class MenuPage extends Component {
 const mdtp = {
   fetchMenuList: menuOperations.fetchMenuList,
   fetchMenuCategories: menuOperations.fetchMenuCategories,
+  handleFilterChange: menuActions.MENU_FILTER_CHANGE,
 };
 
 const mstp = state => ({
-  menuList: state.menuList,
   isLoading: state.isLoading,
   categories: state.menuCategories,
+  filter: state.menuFilter,
+  menuListFiltered: menuSelectors.getFilteredMenuList(state),
 });
 
 export default connect(

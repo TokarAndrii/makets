@@ -19,9 +19,15 @@ const FETCH_ERROR = error => ({
   payload: error,
 });
 
+const MENU_FILTER_CHANGE = filter => ({
+  type: menuTypes.MENU_FILTER_CHANGE,
+  payload: filter,
+});
+
 export default {
   FETCH_START,
   FETCH_SUCCESS_MENU_LIST,
   FETCH_ERROR,
   FETCH_SUCCESS_MENU_CATEGORIES,
+  MENU_FILTER_CHANGE,
 };
