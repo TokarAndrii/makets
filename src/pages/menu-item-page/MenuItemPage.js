@@ -3,7 +3,7 @@ import uuidv4 from 'uuid/v4';
 import GridLoader from 'react-spinners/GridLoader';
 import { colorPalette } from 'material-icons-react';
 import Button from '../../components/shared/Button/Button';
-import * as MenuApiServices from '../../services/menu-api/menu-api-services';
+import menuApiServices from '../../services/menu-api/menu-api-services';
 import StarRateItem from '../../components/shared/StarRateItem/StarRateItem';
 import styles from './MenuItemPage.module.css';
 
@@ -27,7 +27,7 @@ export default class MenuItemPage extends Component {
     const { id } = match.params;
     this.setIsLoadingTrue();
 
-    MenuApiServices.getByIdMenuItem(id).then(menuItem =>
+    menuApiServices.getByIdMenuItem(id).then(menuItem =>
       this.setState({
         isLoading: false,
         image: menuItem.image,

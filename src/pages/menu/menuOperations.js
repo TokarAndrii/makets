@@ -1,10 +1,12 @@
 import axios from 'axios';
+import menuApiServices from '../../services/menu-api/menu-api-services';
 import menuActions from './duck/menuActions';
 
-const fetchMenuList = () => dispatch => {
+const fetchMenuList = category => dispatch => {
   dispatch(menuActions.FETCH_START());
-  axios
-    .get('http://localhost:3001/menu')
+  menuApiServices
+    .getAllMenuByCategory(category)
+
     .then(resp => {
       dispatch(menuActions.FETCH_SUCCESS_MENU_LIST(resp.data));
     })

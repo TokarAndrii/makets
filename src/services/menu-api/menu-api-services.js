@@ -2,13 +2,13 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3001/menu';
 
-const getAllMenu = () => axios.get(BASE_URL).then(resp => resp.data);
+const getAllMenu = () => axios.get(BASE_URL);
 
 const getAllMenuByCategory = category => {
   if (category === 'all') {
     return getAllMenu();
   }
-  return axios.get(`${BASE_URL}?category=${category}`).then(resp => resp.data);
+  return axios.get(`${BASE_URL}?category=${category}`);
 };
 
 const getByIdMenuItem = id =>
@@ -19,7 +19,7 @@ const deleteByIdMenuItem = id =>
 
 const addMenuItem = item => axios.post(BASE_URL, item).then(resp => resp.data);
 
-export {
+export default {
   getAllMenu,
   getByIdMenuItem,
   deleteByIdMenuItem,

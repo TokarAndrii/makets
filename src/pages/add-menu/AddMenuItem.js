@@ -3,7 +3,7 @@ import GridLoader from 'react-spinners/GridLoader';
 import Input from '../../components/shared/Input/Input';
 import Button from '../../components/shared/Button/Button';
 import * as CategoriesApiServices from '../../services/categories-api/categoriesApiServices';
-import * as MenuApiServices from '../../services/menu-api/menu-api-services';
+import menuApiServices from '../../services/menu-api/menu-api-services';
 import styles from './AddMenuItem.module.css';
 
 const INITIAL_STATE = {
@@ -65,7 +65,7 @@ export default class AddMenuItem extends Component {
     };
 
     this.setIsLoadingTrue();
-    MenuApiServices.addMenuItem(itemMenu).then(newMenuItem => {
+    menuApiServices.addMenuItem(itemMenu).then(newMenuItem => {
       this.setState(state => ({
         menuList: [...state.menuList, newMenuItem],
         isLoading: false,
